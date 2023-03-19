@@ -2,13 +2,12 @@ package ru.tinkoff.edu.parser;
 
 import ru.tinkoff.edu.record.StackOverflowRecord;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class StackOverflowLinkParser extends LinkParser {
     private final Pattern PATTERN =
-            Pattern.compile("^https://stackoverflow.com/questions/[\\d]+/[a-z-\\d]+");
+            Pattern.compile("^https://stackoverflow.com/questions/(\\d+)/[a-z-\\d]+");
 
     public StackOverflowLinkParser(LinkParser nextLink) {
         super(nextLink);
@@ -16,14 +15,9 @@ public final class StackOverflowLinkParser extends LinkParser {
 
     @Override
     public Record parseLink(String link) {
-        if (PATTERN.matcher(link).matches()) {
-            try {
-                URL url = new URL(link);
-                return new StackOverflowRecord(Long.parseLong(url.getPath().substring(1).split("/")[1]));
-
-            } catch (MalformedURLException e) {
-                return null;
-            }
+        Matcher matcher = PATTERN.matcher(link);
+        if (matcher.matches()) {
+            return new StackOverflowRecord(Long.parseLong(matcher.group(1)));
         }
         if (nextParser != null) {
             return nextParser.parseLink(link);
