@@ -4,6 +4,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import ru.tinkoff.edu.response.QuestionResponse;
 import ru.tinkoff.edu.response.QuestionsResponse;
 
+import java.time.Duration;
+
 public class StackOverflowClient {
     private final String BASE_URL = "https://api.stackexchange.com/2.3/questions/";
 
@@ -28,6 +30,7 @@ public class StackOverflowClient {
                         .build())
                 .retrieve()
                 .bodyToMono(QuestionsResponse.class)
+                .timeout(Duration.ofSeconds(10))
                 .block()
                 .items()
                 .get(0);

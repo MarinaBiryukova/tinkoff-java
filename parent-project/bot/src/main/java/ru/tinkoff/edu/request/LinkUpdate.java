@@ -12,8 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LinkUpdate {
-    private Integer id;
+    private Long id;
     private String url;
     private String description;
-    private List<Integer> tgChatIds;
+    private List<Long> tgChatIds;
 }

@@ -3,6 +3,8 @@ package ru.tinkoff.edu.client;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.tinkoff.edu.response.RepositoryResponse;
 
+import java.time.Duration;
+
 public class GitHubClient {
     private final String BASE_URL = "https://api.github.com/repos/";
 
@@ -26,6 +28,7 @@ public class GitHubClient {
                         .build())
                 .retrieve()
                 .bodyToMono(RepositoryResponse.class)
+                .timeout(Duration.ofSeconds(10))
                 .block();
     }
 }
