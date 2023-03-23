@@ -16,4 +16,7 @@ public class ApplicationConfig {
 
     @NotNull
     Scheduler scheduler;
+
+    @NotNull
+    String token;
 }
