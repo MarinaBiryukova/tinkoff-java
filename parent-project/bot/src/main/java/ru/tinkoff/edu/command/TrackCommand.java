@@ -21,7 +21,13 @@ public class TrackCommand implements Command {
 
     @Override
     public SendMessage process(Update update) {
-        boolean result = client.addTrackedLink(update.message().chat().id(), null);
-        return null;
+        if (update.message().text().substring(1).equals(command())) {
+            return new SendMessage(update.message().chat().id(), "Введите ссылку для отслеживания");
+        }
+        boolean result = client.addTrackedLink(update.message().chat().id(), update.message().text());
+        if (!result) {
+            return new SendMessage(update.message().chat().id(), "Произошла ошибка\nПроверьте, что введенная ссылка верна, и попробуйте еще раз");
+        }
+        return new SendMessage(update.message().chat().id(), "Ссылка успешно добавлена в список для отслеживания");
     }
 }

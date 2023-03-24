@@ -1,8 +1,6 @@
 package ru.tinkoff.edu.client;
 
-import io.swagger.v3.oas.models.links.Link;
 import org.springframework.http.HttpMethod;
-import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import ru.tinkoff.edu.request.AddLinkRequest;
@@ -58,8 +56,9 @@ public class ScrapperClient {
                 .retrieve()
                 .bodyToMono(LinkResponse.class)
                 .timeout(Duration.ofSeconds(10))
+                .onErrorReturn(new LinkResponse())
                 .block();
-        return response != null && response.getUrl().toString().equals(link);
+        return response != null && response.getUrl() != null && response.getUrl().toString().equals(link);
     }
 
     public boolean deleteTrackedLink(Long id, String link) {
@@ -71,7 +70,8 @@ public class ScrapperClient {
                 .retrieve()
                 .bodyToMono(LinkResponse.class)
                 .timeout(Duration.ofSeconds(10))
+                .onErrorReturn(new LinkResponse())
                 .block();
-        return response != null && response.getUrl().toString().equals(link);
+        return response != null && response.getUrl() != null && response.getUrl().toString().equals(link);
     }
 }
