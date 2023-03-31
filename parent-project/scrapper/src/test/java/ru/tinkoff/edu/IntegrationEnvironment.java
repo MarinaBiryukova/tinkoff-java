@@ -18,8 +18,8 @@ public abstract class IntegrationEnvironment {
     static final protected PostgreSQLContainer POSTGRE_SQL_CONTAINER;
     static final private String CHANGELOG_PATH = "master.xml";
     static final private String POSTGRESQL_IMAGE = "postgres:14";
-    static final private Path ROOT_DIRECTORY = Path.of(".").toAbsolutePath()
-            .resolveSibling("src/main/resources/migrations/");
+    static final private Path ROOT_DIRECTORY = Path.of(".").toAbsolutePath().getParent().getParent()
+            .resolve("migrations/");
 
     static {
         POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(POSTGRESQL_IMAGE);
