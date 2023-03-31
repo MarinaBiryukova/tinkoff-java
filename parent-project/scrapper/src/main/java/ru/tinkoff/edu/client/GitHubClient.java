@@ -24,8 +24,7 @@ public class GitHubClient {
 
     public RepositoryResponse getRepoInfo(String username, String repo) {
         return WEB_CLIENT.get()
-                .uri(uriBuilder -> uriBuilder.path(username + "/" + repo)
-                        .build())
+                .uri("{username}/{repo}", username, repo)
                 .retrieve()
                 .bodyToMono(RepositoryResponse.class)
                 .timeout(Duration.ofSeconds(10))
