@@ -1,9 +1,20 @@
 package ru.tinkoff.edu.configuration;
 
 import jakarta.validation.constraints.NotNull;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.validation.annotation.Validated;
 
+@Getter
+@Setter
+@ToString
 @Validated
-@ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
-public record ApplicationConfig(@NotNull String test) {}
+public class ApplicationConfig {
+    @NotNull
+    String test;
+
+    @NotNull
+    Scheduler scheduler;
+}
+

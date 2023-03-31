@@ -9,6 +9,7 @@ import ru.tinkoff.edu.configuration.ApplicationConfig;
 @EnableConfigurationProperties(ApplicationConfig.class)
 public class BotApplication
 {
+
     public static void main( String[] args )
     {
         var ctx = SpringApplication.run(BotApplication.class, args);
