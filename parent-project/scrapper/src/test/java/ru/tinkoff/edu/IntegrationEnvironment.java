@@ -36,6 +36,8 @@ public abstract class IntegrationEnvironment {
                     new DirectoryResourceAccessor(ROOT_DIRECTORY),
                     database);
             liquibase.update(new Contexts(), new LabelExpression());
+            liquibase.close();
+            connection.close();
         } catch (SQLException | LiquibaseException | FileNotFoundException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);

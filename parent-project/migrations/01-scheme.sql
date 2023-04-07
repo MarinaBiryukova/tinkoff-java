@@ -9,7 +9,11 @@ CREATE TABLE chat (
 
 CREATE TABLE link (
     id SERIAL PRIMARY KEY NOT NULL,
-    link TEXT NOT NULL
+    link TEXT NOT NULL,
+    last_update TIMESTAMP NOT NULL,
+    last_activity TIMESTAMP NOT NULL,
+    open_issues_count INTEGER,
+    answer_count INTEGER
 );
 
 CREATE TABLE chat_link (

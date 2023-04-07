@@ -1,18 +1,23 @@
 package ru.tinkoff.edu.controller;
 
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.tinkoff.edu.service.jdbc.JdbcTgChatService;
 
+@AllArgsConstructor
 @RestController()
 @RequestMapping("/tg-chat")
 public class TgChatController {
+    private final JdbcTgChatService service;
 
     @PostMapping(value = "/{id}")
     public void registerChat(@PathVariable("id") Long id) {
-        System.out.println("Chat with id '" + id.toString() + "' was registered");
+        service.register(id);
     }
 
     @DeleteMapping(value = "{id}")
     public void deleteChat(@PathVariable("id") Long id) {
-        System.out.println("Chat with id '" + id.toString() + "' was deleted");
+        service.unregister(id);
     }
 }

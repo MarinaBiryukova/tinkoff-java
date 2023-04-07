@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.net.URI;
 import java.util.List;
 
 @Getter
@@ -13,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class LinkUpdate {
     private Long id;
-    private String url;
+    private URI url;
     private String description;
     private List<Long> tgChatIds;
 }

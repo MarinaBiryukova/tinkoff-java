@@ -19,10 +19,6 @@ public class ScrapperApplication
         var ctx = SpringApplication.run(ScrapperApplication.class, args);
         ApplicationConfig config = ctx.getBean(ApplicationConfig.class);
         System.out.println(config);
-        StackOverflowClient stackOverflowClient = ctx.getBean(StackOverflowClient.class);
-        System.out.println(stackOverflowClient.getQuestionInfo(75771004L));
-        GitHubClient gitHubClient = ctx.getBean(GitHubClient.class);
-        System.out.println(gitHubClient.getRepoInfo("MarinaBiryukova", "tinkoff-java"));
     }
 
     @Bean("applicationConfig")

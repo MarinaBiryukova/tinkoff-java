@@ -10,6 +10,8 @@ public class LinkUpdateController {
 
     @PostMapping("/updates")
     public void update(@RequestBody LinkUpdate request) {
-
+        System.out.println(request.getUrl());
+        System.out.println(request.getDescription());
+        System.out.println(request.getTgChatIds());
     }
 }
