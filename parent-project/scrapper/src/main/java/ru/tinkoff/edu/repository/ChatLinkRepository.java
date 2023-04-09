@@ -55,10 +55,12 @@ public class ChatLinkRepository {
         if (tgChat == null) {
             throw new ResourceNotFoundException("Tg chat '" + tgChatId + "' was not found");
         }
-        int rowCount = jdbcTemplate.update("insert into chat_link (chat_id, link_id) values (?, ?)", tgChat.getId(), link.getId());
-        if (rowCount == 0) {
-            throw new RuntimeException("Error while adding tracked link '" + url + "' for tg chat '" + tgChatId + "'");
+        Integer rowCount = jdbcTemplate.queryForObject("select count(*) from chat_link where chat_id=? and link_id=?", Integer.class,
+                tgChat.getId(), link.getId());
+        if (rowCount != null && !rowCount.equals(0)) {
+            throw new RuntimeException("Link '" + url + "' is already tracking by tg chat '" + tgChatId + "'");
         }
+        jdbcTemplate.update("insert into chat_link (chat_id, link_id) values (?, ?)", tgChat.getId(), link.getId());
         return link;
     }
 
@@ -74,7 +76,7 @@ public class ChatLinkRepository {
         }
         int rowCount = jdbcTemplate.update("delete from chat_link where chat_id=? and link_id=?", tgChat.getId(), link.getId());
         if (rowCount == 0) {
-            throw new RuntimeException("Error while untracking link '" + url + "' for tg chat '" + tgChatId + "'");
+            throw new RuntimeException("Link '" + url + "' is not tracking by tg chat '" + tgChatId + "'");
         }
         if (getLinkCount(link.getId()).equals(0)) {
             linkRepository.remove(link.getLink());

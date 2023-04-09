@@ -1,7 +1,6 @@
 package ru.tinkoff.edu.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.tinkoff.edu.service.jdbc.JdbcTgChatService;
 

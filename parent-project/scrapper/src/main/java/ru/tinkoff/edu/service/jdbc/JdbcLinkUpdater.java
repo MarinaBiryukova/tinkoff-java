@@ -1,7 +1,6 @@
 package ru.tinkoff.edu.service.jdbc;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.client.BotClient;
 import ru.tinkoff.edu.client.GitHubClient;
@@ -43,11 +42,11 @@ public class JdbcLinkUpdater implements LinkUpdater {
             if (!response.answer_count().equals(link.getAnswerCount())) {
                 link.setLastActivity(response.last_activity_date());
                 link.setAnswerCount(response.answer_count());
-                List<Long> chatIds = chatLinkRepository.getChatsForLink(link).stream().map(TgChat::getId).toList();
+                List<Long> chatIds = chatLinkRepository.getChatsForLink(link).stream().map(TgChat::getTgChatId).toList();
                 sendUpdate(link, "In question '" + response.question_id() + "' new answers have been added!", chatIds);
             } else if (response.last_activity_date().isAfter(link.getLastActivity())) {
                 link.setLastActivity(response.last_activity_date());
-                List<Long> chatIds = chatLinkRepository.getChatsForLink(link).stream().map(TgChat::getId).toList();
+                List<Long> chatIds = chatLinkRepository.getChatsForLink(link).stream().map(TgChat::getTgChatId).toList();
                 sendUpdate(link, "Question '" + response.question_id() + "' has updates!", chatIds);
             }
             linkRepository.update(link);
@@ -57,11 +56,11 @@ public class JdbcLinkUpdater implements LinkUpdater {
             if (!response.open_issues_count().equals(link.getOpenIssuesCount())) {
                 link.setLastActivity(response.updated_at());
                 link.setOpenIssuesCount(response.open_issues_count());
-                List<Long> chatIds = chatLinkRepository.getChatsForLink(link).stream().map(TgChat::getId).toList();
+                List<Long> chatIds = chatLinkRepository.getChatsForLink(link).stream().map(TgChat::getTgChatId).toList();
                 sendUpdate(link, "In repository '" + response.full_name() + "' new open issues have been added!", chatIds);
             } else if (response.updated_at().isAfter(link.getLastActivity())) {
                 link.setLastActivity(response.updated_at());
-                List<Long> chatIds = chatLinkRepository.getChatsForLink(link).stream().map(TgChat::getId).toList();
+                List<Long> chatIds = chatLinkRepository.getChatsForLink(link).stream().map(TgChat::getTgChatId).toList();
                 sendUpdate(link, "Repository '" + response.full_name() + "' has updates!", chatIds);
             }
             linkRepository.update(link);
