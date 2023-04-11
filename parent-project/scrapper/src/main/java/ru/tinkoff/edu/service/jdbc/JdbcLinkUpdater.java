@@ -1,7 +1,6 @@
 package ru.tinkoff.edu.service.jdbc;
 
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.client.BotClient;
 import ru.tinkoff.edu.client.GitHubClient;
 import ru.tinkoff.edu.client.StackOverflowClient;
@@ -23,7 +22,6 @@ import java.time.ZoneId;
 import java.util.List;
 
 @AllArgsConstructor
-@Service
 public class JdbcLinkUpdater implements LinkUpdater {
     private final ChatLinkRepository chatLinkRepository;
     private final LinkRepository linkRepository;

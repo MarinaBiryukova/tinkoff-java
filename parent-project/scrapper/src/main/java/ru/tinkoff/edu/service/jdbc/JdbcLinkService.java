@@ -1,7 +1,6 @@
 package ru.tinkoff.edu.service.jdbc;
 
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.converter.Converter;
 import ru.tinkoff.edu.repository.ChatLinkRepository;
 import ru.tinkoff.edu.response.LinkResponse;
@@ -12,7 +11,6 @@ import ru.tinkoff.edu.service.LinkService;
 import java.net.URI;
 
 @AllArgsConstructor
-@Service
 public class JdbcLinkService implements LinkService {
     private final ChatLinkRepository repository;
     private final Converter converter;

@@ -5,13 +5,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.repository.LinkRepository;
 import ru.tinkoff.edu.repository.dto.Link;
-import ru.tinkoff.edu.service.jdbc.JdbcLinkUpdater;
+import ru.tinkoff.edu.service.LinkUpdater;
 import java.util.List;
 
 @Component
 @AllArgsConstructor
 public class LinkUpdaterScheduler {
-    private final JdbcLinkUpdater linkUpdater;
+    private final LinkUpdater linkUpdater;
     private final LinkRepository linkRepository;
 
     @Scheduled(fixedDelayString = "#{@applicationConfig.scheduler.interval()}")

@@ -2,7 +2,6 @@ package ru.tinkoff.edu.service.jooq;
 
 import lombok.AllArgsConstructor;
 import org.jooq.DSLContext;
-import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.client.BotClient;
 import ru.tinkoff.edu.client.GitHubClient;
 import ru.tinkoff.edu.client.StackOverflowClient;
@@ -23,7 +22,6 @@ import java.time.ZoneId;
 import java.util.List;
 
 @AllArgsConstructor
-@Service
 public class JooqLinkUpdater implements LinkUpdater {
     private final BotClient botClient;
     private final GitHubClient gitHubClient;
