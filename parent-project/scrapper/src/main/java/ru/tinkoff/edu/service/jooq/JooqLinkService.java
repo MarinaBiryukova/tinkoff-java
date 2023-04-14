@@ -10,17 +10,18 @@ import ru.tinkoff.edu.repository.dto.Link;
 import ru.tinkoff.edu.repository.dto.TgChat;
 import ru.tinkoff.edu.response.LinkResponse;
 import ru.tinkoff.edu.response.ListLinksResponse;
-import ru.tinkoff.edu.service.LinkCreator;
+import ru.tinkoff.edu.service.LinkManipulator;
 import ru.tinkoff.edu.service.LinkService;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
 public class JooqLinkService implements LinkService {
     private DSLContext context;
     private final Converter converter;
-    private final LinkCreator linkCreator;
+    private final LinkManipulator linkManipulator;
 
     @Transactional
     @Override
@@ -31,7 +32,7 @@ public class JooqLinkService implements LinkService {
         }
         Link link = getLink(url);
         if (link == null) {
-            Link newLink = linkCreator.createLink(url);
+            Link newLink = linkManipulator.createLink(url);
             context.insertInto(Tables.LINK, Tables.LINK.LINK_, Tables.LINK.LAST_UPDATE, Tables.LINK.LAST_ACTIVITY, Tables.LINK.ANSWER_COUNT,
                     Tables.LINK.OPEN_ISSUES_COUNT).values(newLink.getLink().toString(), newLink.getLastUpdate().toLocalDateTime(),
                     newLink.getLastActivity().toLocalDateTime(), newLink.getAnswerCount(), newLink.getOpenIssuesCount()).execute();
@@ -83,6 +84,27 @@ public class JooqLinkService implements LinkService {
         return converter.linksToListLinksResponse(context.select(Tables.LINK.fields()).from(Tables.LINK)
                 .join(Tables.CHAT_LINK).on(Tables.CHAT_LINK.LINK_ID.eq(Tables.LINK.ID))
                 .where(Tables.CHAT_LINK.CHAT_ID.eq(tgChat.getId())).fetchInto(Link.class));
+    }
+
+    @Override
+    public List<Link> findLinksForUpdate() {
+        return context.select(Tables.LINK.fields()).from(Tables.LINK)
+                .where(Tables.LINK.LAST_UPDATE.lessThan(LocalDateTime.now().minusMinutes(5))).fetchInto(Link.class);
+    }
+
+    @Override
+    public List<TgChat> getChatsForLink(Link link) {
+        return context.select(Tables.CHAT.fields()).from(Tables.CHAT_LINK).join(Tables.CHAT).on(Tables.CHAT.ID.eq(Tables.CHAT_LINK.CHAT_ID))
+                .where(Tables.CHAT_LINK.LINK_ID.eq(link.getId())).fetchInto(TgChat.class);
+    }
+
+    @Override
+    public void updateLink(Link link) {
+        context.update(Tables.LINK).set(Tables.LINK.LAST_UPDATE, link.getLastUpdate().toLocalDateTime())
+                .set(Tables.LINK.LAST_ACTIVITY, link.getLastActivity().toLocalDateTime())
+                .set(Tables.LINK.ANSWER_COUNT, link.getAnswerCount())
+                .set(Tables.LINK.OPEN_ISSUES_COUNT, link.getOpenIssuesCount())
+                .where(Tables.LINK.ID.eq(link.getId())).execute();
     }
 
     private Link getLink(URI url) {

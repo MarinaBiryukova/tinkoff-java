@@ -17,13 +17,13 @@ import java.time.OffsetDateTime;
 
 @AllArgsConstructor
 @Service
-public class LinkCreator {
+public class LinkManipulator {
     private final GitHubClient gitHubClient;
     private final StackOverflowClient stackOverflowClient;
+    private final GitHubLinkParser gitHubLinkParser = new GitHubLinkParser(null);
+    private final StackOverflowLinkParser stackOverflowLinkParser = new StackOverflowLinkParser(gitHubLinkParser);
 
     public Link createLink(URI url) {
-        GitHubLinkParser gitHubLinkParser = new GitHubLinkParser(null);
-        StackOverflowLinkParser stackOverflowLinkParser = new StackOverflowLinkParser(gitHubLinkParser);
         Record record = stackOverflowLinkParser.parseLink(url.toString());
         if (record == null) {
             throw new RuntimeException("Invalid link '" + url + "'");
@@ -43,5 +43,17 @@ public class LinkCreator {
             link.setAnswerCount(response.answer_count());
         }
         return link;
+    }
+
+    public Record getRecord(Link link) {
+        return stackOverflowLinkParser.parseLink(link.getLink().toString());
+    }
+
+    public RepositoryResponse getResponse(GitHubRecord record) {
+        return gitHubClient.getRepoInfo(record.username(), record.repo());
+    }
+
+    public QuestionResponse getResponse(StackOverflowRecord record) {
+        return stackOverflowClient.getQuestionInfo(record.questionId());
     }
 }

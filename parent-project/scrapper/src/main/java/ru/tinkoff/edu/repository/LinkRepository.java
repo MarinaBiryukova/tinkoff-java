@@ -30,12 +30,9 @@ public class LinkRepository {
     }
 
     public Link add(Link url) {
-        int rowCount = jdbcTemplate.update("insert into link (link, last_update, last_activity, open_issues_count, answer_count) " +
+        jdbcTemplate.update("insert into link (link, last_update, last_activity, open_issues_count, answer_count) " +
                         "values (?, ?, ?, ?, ?)", url.getLink().toString(), url.getLastUpdate(), url.getLastActivity(),
                 url.getOpenIssuesCount(), url.getAnswerCount());
-        if (rowCount == 0) {
-            throw new RuntimeException("Error while inserting link '" + url + "'");
-        }
         return get(url.getLink());
     }
 
@@ -44,10 +41,7 @@ public class LinkRepository {
         if (link == null) {
             throw new ResourceNotFoundException("Link '" + url + "' was not found");
         }
-        int rowCount = jdbcTemplate.update("delete from link where link=?", url.toString());
-        if (rowCount == 0) {
-            throw new RuntimeException("Error while deleting link '" + url + "'");
-        }
+        jdbcTemplate.update("delete from link where link=?", url.toString());
     }
 
     public Link get(URI url) {
@@ -59,7 +53,10 @@ public class LinkRepository {
     }
 
     public void update(Link link) {
-        jdbcTemplate.update("update link set last_update=?, last_activity=?, open_issues_count=?, answer_count=? where id=?",
+        int rowCount = jdbcTemplate.update("update link set last_update=?, last_activity=?, open_issues_count=?, answer_count=? where id=?",
                 link.getLastUpdate(), link.getLastActivity(), link.getOpenIssuesCount(), link.getAnswerCount(), link.getId());
+        if (rowCount == 0) {
+            throw new RuntimeException("Error while updating link '" + link.getLink() + "'");
+        }
     }
 }

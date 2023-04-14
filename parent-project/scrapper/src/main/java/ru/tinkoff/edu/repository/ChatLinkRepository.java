@@ -85,7 +85,7 @@ public class ChatLinkRepository {
     }
 
     public List<TgChat> getChatsForLink(Link link) {
-        return jdbcTemplate.query("select * from chat where id in (select chat_id from chat_link where link_id=?)", tgChatMapper);
+        return jdbcTemplate.query("select * from chat where id in (select chat_id from chat_link where link_id=?)", tgChatMapper, link.getId());
     }
 
     private Integer getLinkCount(Long linkId) {

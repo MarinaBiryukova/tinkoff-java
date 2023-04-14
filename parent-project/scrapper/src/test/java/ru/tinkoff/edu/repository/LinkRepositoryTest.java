@@ -1,14 +1,10 @@
 package ru.tinkoff.edu.repository;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +12,6 @@ import ru.tinkoff.edu.IntegrationEnvironment;
 import ru.tinkoff.edu.repository.dto.Link;
 import ru.tinkoff.edu.repository.mapper.LinkMapper;
 
-import javax.sql.DataSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.OffsetDateTime;
@@ -77,17 +72,5 @@ public class LinkRepositoryTest extends IntegrationEnvironment {
         List<Link> all = jdbcTemplate.query("select * from link", linkMapper);
         Assertions.assertEquals(urls.size() + 1, all.size());
         Assertions.assertEquals(newUrl, all.get(all.size() - 1).getLink().toString());
-    }
-
-    @TestConfiguration
-    static class Config {
-        @Bean
-        public DataSource dataSource() {
-            HikariConfig config = new HikariConfig();
-            config.setJdbcUrl(POSTGRE_SQL_CONTAINER.getJdbcUrl());
-            config.setUsername(POSTGRE_SQL_CONTAINER.getUsername());
-            config.setPassword(POSTGRE_SQL_CONTAINER.getPassword());
-            return new HikariDataSource(config);
-        }
     }
 }
