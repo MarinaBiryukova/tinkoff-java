@@ -5,10 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.net.URI;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddLinkRequest {
-    private String link;
+    private URI url;
 }

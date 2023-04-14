@@ -8,6 +8,8 @@ import ru.tinkoff.edu.request.RemoveLinkRequest;
 import ru.tinkoff.edu.response.LinkResponse;
 import ru.tinkoff.edu.response.ListLinksResponse;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.Duration;
 
 public class ScrapperClient {
@@ -48,7 +50,12 @@ public class ScrapperClient {
     }
 
     public boolean addTrackedLink(Long id, String link) {
-        AddLinkRequest request = new AddLinkRequest(link);
+        AddLinkRequest request;
+        try {
+            request = new AddLinkRequest(new URI(link));
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
         LinkResponse response = WEB_CLIENT.post()
                 .uri("links")
                 .header("Tg-Chat-Id", id.toString())
@@ -62,7 +69,12 @@ public class ScrapperClient {
     }
 
     public boolean deleteTrackedLink(Long id, String link) {
-        RemoveLinkRequest request = new RemoveLinkRequest(link);
+        RemoveLinkRequest request;
+        try {
+            request = new RemoveLinkRequest(new URI(link));
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
         LinkResponse response = WEB_CLIENT.method(HttpMethod.DELETE)
                 .uri("links")
                 .header("Tg-Chat-Id", id.toString())

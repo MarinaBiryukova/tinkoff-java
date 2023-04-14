@@ -8,6 +8,8 @@ import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.DirectoryResourceAccessor;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.io.FileNotFoundException;
@@ -36,9 +38,18 @@ public abstract class IntegrationEnvironment {
                     new DirectoryResourceAccessor(ROOT_DIRECTORY),
                     database);
             liquibase.update(new Contexts(), new LabelExpression());
+            liquibase.close();
+            connection.close();
         } catch (SQLException | LiquibaseException | FileNotFoundException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    @DynamicPropertySource
+    static void registerProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", POSTGRE_SQL_CONTAINER::getJdbcUrl);
+        registry.add("spring.datasource.username", POSTGRE_SQL_CONTAINER::getUsername);
+        registry.add("spring.datasource.password", POSTGRE_SQL_CONTAINER::getPassword);
     }
 }
