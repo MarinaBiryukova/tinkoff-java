@@ -2,10 +2,10 @@ package ru.tinkoff.edu.service.jdbc;
 
 import lombok.AllArgsConstructor;
 import ru.tinkoff.edu.converter.Converter;
-import ru.tinkoff.edu.repository.ChatLinkRepository;
-import ru.tinkoff.edu.repository.LinkRepository;
-import ru.tinkoff.edu.repository.dto.Link;
-import ru.tinkoff.edu.repository.dto.TgChat;
+import ru.tinkoff.edu.repository.jdbc.ChatLinkRepository;
+import ru.tinkoff.edu.repository.jdbc.LinkRepository;
+import ru.tinkoff.edu.repository.jdbc.dto.Link;
+import ru.tinkoff.edu.repository.jdbc.dto.TgChat;
 import ru.tinkoff.edu.response.LinkResponse;
 import ru.tinkoff.edu.response.ListLinksResponse;
 import ru.tinkoff.edu.service.LinkManipulator;

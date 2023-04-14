@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.repository;
+package ru.tinkoff.edu.repository.jdbc;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,8 +9,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.IntegrationEnvironment;
-import ru.tinkoff.edu.repository.dto.TgChat;
-import ru.tinkoff.edu.repository.mapper.TgChatMapper;
+import ru.tinkoff.edu.repository.jdbc.TgChatRepository;
+import ru.tinkoff.edu.repository.jdbc.dto.TgChat;
+import ru.tinkoff.edu.repository.jdbc.mapper.TgChatMapper;
 
 import java.util.List;
 

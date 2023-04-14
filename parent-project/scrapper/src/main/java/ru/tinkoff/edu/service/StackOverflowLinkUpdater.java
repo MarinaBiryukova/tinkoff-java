@@ -3,7 +3,7 @@ package ru.tinkoff.edu.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.record.StackOverflowRecord;
-import ru.tinkoff.edu.repository.dto.Link;
+import ru.tinkoff.edu.repository.jdbc.dto.Link;
 import ru.tinkoff.edu.response.QuestionResponse;
 
 import java.time.OffsetDateTime;

@@ -3,8 +3,8 @@ package ru.tinkoff.edu.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.client.BotClient;
-import ru.tinkoff.edu.repository.dto.Link;
-import ru.tinkoff.edu.repository.dto.TgChat;
+import ru.tinkoff.edu.repository.jdbc.dto.Link;
+import ru.tinkoff.edu.repository.jdbc.dto.TgChat;
 import ru.tinkoff.edu.request.LinkUpdate;
 
 @AllArgsConstructor

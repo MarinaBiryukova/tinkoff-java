@@ -1,8 +1,8 @@
-package ru.tinkoff.edu.repository.mapper;
+package ru.tinkoff.edu.repository.jdbc.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-import ru.tinkoff.edu.repository.dto.Link;
+import ru.tinkoff.edu.repository.jdbc.dto.Link;
 
 import java.net.URI;
 import java.net.URISyntaxException;

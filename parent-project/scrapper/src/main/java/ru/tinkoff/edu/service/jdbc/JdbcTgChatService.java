@@ -1,7 +1,7 @@
 package ru.tinkoff.edu.service.jdbc;
 
 import lombok.AllArgsConstructor;
-import ru.tinkoff.edu.repository.ChatLinkRepository;
+import ru.tinkoff.edu.repository.jdbc.ChatLinkRepository;
 import ru.tinkoff.edu.service.TgChatService;
 
 @AllArgsConstructor

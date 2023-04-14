@@ -1,11 +1,11 @@
-package ru.tinkoff.edu.repository;
+package ru.tinkoff.edu.repository.jdbc;
 
 import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.tinkoff.edu.repository.dto.TgChat;
-import ru.tinkoff.edu.repository.mapper.TgChatMapper;
+import ru.tinkoff.edu.repository.jdbc.dto.TgChat;
+import ru.tinkoff.edu.repository.jdbc.mapper.TgChatMapper;
 
 import java.util.List;
 
