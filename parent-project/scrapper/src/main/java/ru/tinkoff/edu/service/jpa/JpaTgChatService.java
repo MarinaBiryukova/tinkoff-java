@@ -21,12 +21,7 @@ public class JpaTgChatService implements TgChatService {
     @Transactional
     @Override
     public void register(Long tgChatId) {
-        if (tgChatEntityRepository.findByTgChatId(tgChatId).isPresent()) {
-            throw new ResourceNotFoundException("Tg chat '" + tgChatId + "' already exists");
-        }
-        TgChatEntity tgChat = new TgChatEntity();
-        tgChat.setTgChatId(tgChatId);
-        tgChatEntityRepository.save(tgChat);
+        tgChatEntityRepository.insertTgChat(tgChatId);
     }
 
     @Transactional
