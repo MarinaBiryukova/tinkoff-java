@@ -2,13 +2,12 @@ package ru.tinkoff.edu.service.jooq;
 
 import lombok.AllArgsConstructor;
 import org.jooq.DSLContext;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.converter.Converter;
 import ru.tinkoff.edu.domain.jooq.Tables;
 import ru.tinkoff.edu.exception.ResourceNotFoundException;
-import ru.tinkoff.edu.repository.dto.Link;
-import ru.tinkoff.edu.repository.dto.TgChat;
+import ru.tinkoff.edu.repository.jdbc.dto.Link;
+import ru.tinkoff.edu.repository.jdbc.dto.TgChat;
 import ru.tinkoff.edu.response.LinkResponse;
 import ru.tinkoff.edu.response.ListLinksResponse;
 import ru.tinkoff.edu.service.LinkManipulator;
@@ -19,7 +18,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
-@Service
 public class JooqLinkService implements LinkService {
     private DSLContext context;
     private final Converter converter;

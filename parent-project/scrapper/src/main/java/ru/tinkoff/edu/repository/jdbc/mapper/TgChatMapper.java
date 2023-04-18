@@ -1,8 +1,8 @@
-package ru.tinkoff.edu.repository.mapper;
+package ru.tinkoff.edu.repository.jdbc.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-import ru.tinkoff.edu.repository.dto.TgChat;
+import ru.tinkoff.edu.repository.jdbc.dto.TgChat;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

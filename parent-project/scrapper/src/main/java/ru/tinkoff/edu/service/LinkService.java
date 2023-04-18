@@ -1,7 +1,7 @@
 package ru.tinkoff.edu.service;
 
-import ru.tinkoff.edu.repository.dto.Link;
-import ru.tinkoff.edu.repository.dto.TgChat;
+import ru.tinkoff.edu.repository.jdbc.dto.Link;
+import ru.tinkoff.edu.repository.jdbc.dto.TgChat;
 import ru.tinkoff.edu.response.LinkResponse;
 import ru.tinkoff.edu.response.ListLinksResponse;
 

@@ -5,7 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.record.GitHubRecord;
 import ru.tinkoff.edu.record.StackOverflowRecord;
-import ru.tinkoff.edu.repository.dto.Link;
+import ru.tinkoff.edu.repository.jdbc.dto.Link;
 import ru.tinkoff.edu.service.*;
 
 import java.util.List;

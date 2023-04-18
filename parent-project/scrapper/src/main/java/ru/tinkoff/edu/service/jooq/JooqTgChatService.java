@@ -2,18 +2,16 @@ package ru.tinkoff.edu.service.jooq;
 
 import lombok.AllArgsConstructor;
 import org.jooq.DSLContext;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.domain.jooq.Tables;
 import ru.tinkoff.edu.exception.ResourceNotFoundException;
-import ru.tinkoff.edu.repository.dto.Link;
-import ru.tinkoff.edu.repository.dto.TgChat;
+import ru.tinkoff.edu.repository.jdbc.dto.Link;
+import ru.tinkoff.edu.repository.jdbc.dto.TgChat;
 import ru.tinkoff.edu.service.TgChatService;
 
 import java.util.List;
 
 @AllArgsConstructor
-@Service
 public class JooqTgChatService implements TgChatService {
     private DSLContext context;
 

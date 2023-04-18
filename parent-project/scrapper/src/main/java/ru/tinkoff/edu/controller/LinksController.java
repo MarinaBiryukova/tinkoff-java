@@ -7,14 +7,14 @@ import ru.tinkoff.edu.request.AddLinkRequest;
 import ru.tinkoff.edu.request.RemoveLinkRequest;
 import ru.tinkoff.edu.response.LinkResponse;
 import ru.tinkoff.edu.response.ListLinksResponse;
-import ru.tinkoff.edu.service.jdbc.JdbcLinkService;
+import ru.tinkoff.edu.service.LinkService;
 
 
 @AllArgsConstructor
 @RestController()
 @RequestMapping("/links")
 public class LinksController {
-    private final JdbcLinkService service;
+    private final LinkService service;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ListLinksResponse getTrackedLinks(@RequestHeader("Tg-Chat-Id") Long id) {

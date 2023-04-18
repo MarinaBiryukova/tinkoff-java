@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.repository.dto;
+package ru.tinkoff.edu.repository.jdbc.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

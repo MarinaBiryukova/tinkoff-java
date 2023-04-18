@@ -2,13 +2,13 @@ package ru.tinkoff.edu.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.tinkoff.edu.service.jdbc.JdbcTgChatService;
+import ru.tinkoff.edu.service.TgChatService;
 
 @AllArgsConstructor
 @RestController()
 @RequestMapping("/tg-chat")
 public class TgChatController {
-    private final JdbcTgChatService service;
+    private final TgChatService service;
 
     @PostMapping(value = "/{id}")
     public void registerChat(@PathVariable("id") Long id) {
