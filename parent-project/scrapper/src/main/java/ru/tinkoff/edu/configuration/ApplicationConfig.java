@@ -24,6 +24,9 @@ public class ApplicationConfig {
     AccessType databaseAccessType;
 
     @NotNull
+    Integer updateInterval;
+
+    @NotNull
     boolean useQueue;
 
     String queueName;

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.tinkoff.edu.configuration.ApplicationConfig;
 import ru.tinkoff.edu.exception.ResourceNotFoundException;
 import ru.tinkoff.edu.repository.jdbc.dto.Link;
 import ru.tinkoff.edu.repository.jdbc.mapper.LinkMapper;
@@ -19,10 +20,11 @@ import java.util.List;
 public class LinkRepository {
     private final JdbcTemplate jdbcTemplate;
     private final LinkMapper linkMapper;
+    private final ApplicationConfig config;
 
     public List<Link> findAllForUpdate() {
-        return findAll().stream().filter(link -> link.getLastUpdate().isBefore(OffsetDateTime.of(LocalDateTime.now().minusMinutes(5)
-                , ZoneOffset.UTC))).toList();
+        return findAll().stream().filter(link -> link.getLastUpdate()
+                .isBefore(OffsetDateTime.of(LocalDateTime.now().minusMinutes(config.getUpdateInterval()), ZoneOffset.UTC))).toList();
     }
 
     public List<Link> findAll() {
