@@ -17,7 +17,7 @@ import java.time.ZoneId;
 public class StackOverflowLinkUpdater implements LinkUpdater {
     private final LinkService linkService;
     private final LinkManipulator linkManipulator;
-    private final LinkUpdateSender httpLinkUpdateSender;
+    private final LinkUpdateSender linkUpdateSender;
 
     @Override
     public void update(Link link) {
@@ -26,10 +26,10 @@ public class StackOverflowLinkUpdater implements LinkUpdater {
         if (!response.answer_count().equals(link.getAnswerCount())) {
             link.setLastActivity(response.last_activity_date());
             link.setAnswerCount(response.answer_count());
-            httpLinkUpdateSender.sendUpdate(link, "In question '" + response.question_id() + "' new answers have been added!");
+            linkUpdateSender.sendUpdate(link, "In question '" + response.question_id() + "' new answers have been added!");
         } else if (response.last_activity_date().isAfter(link.getLastActivity())) {
             link.setLastActivity(response.last_activity_date());
-            httpLinkUpdateSender.sendUpdate(link, "Question '" + response.question_id() + "' has updates!");
+            linkUpdateSender.sendUpdate(link, "Question '" + response.question_id() + "' has updates!");
         }
         linkService.updateLink(link);
     }

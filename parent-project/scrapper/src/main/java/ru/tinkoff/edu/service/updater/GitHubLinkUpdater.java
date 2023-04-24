@@ -16,7 +16,7 @@ import java.time.OffsetDateTime;
 public class GitHubLinkUpdater implements LinkUpdater {
     private final LinkService linkService;
     private final LinkManipulator linkManipulator;
-    private final LinkUpdateSender httpLinkUpdateSender;
+    private final LinkUpdateSender linkUpdateSender;
 
     @Override
     public void update(Link link) {
@@ -28,10 +28,10 @@ public class GitHubLinkUpdater implements LinkUpdater {
                     "In repository '" + response.full_name() + "' issues have been closed!";
             link.setLastActivity(response.updated_at());
             link.setOpenIssuesCount(response.open_issues_count());
-            httpLinkUpdateSender.sendUpdate(link, desc);
+            linkUpdateSender.sendUpdate(link, desc);
         } else if (response.updated_at().isAfter(link.getLastActivity())) {
             link.setLastActivity(response.updated_at());
-            httpLinkUpdateSender.sendUpdate(link, "Repository '" + response.full_name() + "' has updates!");
+            linkUpdateSender.sendUpdate(link, "Repository '" + response.full_name() + "' has updates!");
         }
         linkService.updateLink(link);
     }
