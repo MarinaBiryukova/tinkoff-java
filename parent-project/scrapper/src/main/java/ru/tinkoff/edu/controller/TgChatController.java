@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.tinkoff.edu.service.TgChatService;
 
 @AllArgsConstructor
-@RestController()
+@RestController
 @RequestMapping("/tg-chat")
 public class TgChatController {
     private final TgChatService service;

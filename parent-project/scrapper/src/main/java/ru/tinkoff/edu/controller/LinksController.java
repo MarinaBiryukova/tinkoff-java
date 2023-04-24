@@ -11,7 +11,7 @@ import ru.tinkoff.edu.service.LinkService;
 
 
 @AllArgsConstructor
-@RestController()
+@RestController
 @RequestMapping("/links")
 public class LinksController {
     private final LinkService service;

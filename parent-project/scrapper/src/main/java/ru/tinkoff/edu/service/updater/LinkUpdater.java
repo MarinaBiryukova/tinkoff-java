@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.service;
+package ru.tinkoff.edu.service.updater;
 
 import ru.tinkoff.edu.repository.jdbc.dto.Link;
 

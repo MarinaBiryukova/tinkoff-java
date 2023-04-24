@@ -7,6 +7,8 @@ import ru.tinkoff.edu.record.GitHubRecord;
 import ru.tinkoff.edu.record.StackOverflowRecord;
 import ru.tinkoff.edu.repository.jdbc.dto.Link;
 import ru.tinkoff.edu.service.*;
+import ru.tinkoff.edu.service.updater.GitHubLinkUpdater;
+import ru.tinkoff.edu.service.updater.StackOverflowLinkUpdater;
 
 import java.util.List;
 

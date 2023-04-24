@@ -84,7 +84,7 @@ public class JpaLinkService implements LinkService {
     @Override
     public List<Link> findLinksForUpdate() {
         return linkEntityRepository.findAll().stream().filter((LinkEntity le) ->
-            le.getLastUpdate().isBefore(OffsetDateTime.of(LocalDateTime.now().minusMinutes(5), ZoneOffset.UTC))
+            le.getLastUpdate().isBefore(OffsetDateTime.of(LocalDateTime.now().minusMinutes(1), ZoneOffset.UTC))
         ).map((LinkEntity le) -> {
             try {
                 return converter.linkEntityToLink(le);
