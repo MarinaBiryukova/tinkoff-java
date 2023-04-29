@@ -16,13 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build Maven project
-        run: mvn package -pl scrapper -am
+        run: mvn package -pl parent-project/scrapper -am
 
       - name: Log in to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build --file scrapper.Dockerfile -t scrapper:latest .
+        run: docker build --file parent-project/scrapper.Dockerfile -t scrapper:latest .
 
       - name: Push Docker image to Docker Hub
         run: docker push scrapper:latest
