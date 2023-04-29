@@ -7,7 +7,7 @@ import ru.tinkoff.edu.client.GitHubClient;
 import ru.tinkoff.edu.client.StackOverflowClient;
 
 @Configuration
-public class ClientConfiguration {
+public class ClientConfig {
 
     @Bean("gitHubClient")
     public GitHubClient gitHubClient() {

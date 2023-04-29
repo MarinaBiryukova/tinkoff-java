@@ -1,10 +1,13 @@
-package ru.tinkoff.edu.service;
+package ru.tinkoff.edu.service.updater;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.record.StackOverflowRecord;
 import ru.tinkoff.edu.repository.jdbc.dto.Link;
 import ru.tinkoff.edu.response.QuestionResponse;
+import ru.tinkoff.edu.service.LinkManipulator;
+import ru.tinkoff.edu.service.LinkService;
+import ru.tinkoff.edu.service.sender.LinkUpdateSender;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
