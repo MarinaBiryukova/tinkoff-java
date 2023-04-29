@@ -1,5 +1,7 @@
 package ru.tinkoff.edu.repository.jdbc;
 
+import java.net.URI;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -9,9 +11,6 @@ import ru.tinkoff.edu.repository.jdbc.dto.Link;
 import ru.tinkoff.edu.repository.jdbc.dto.TgChat;
 import ru.tinkoff.edu.repository.jdbc.mapper.LinkMapper;
 import ru.tinkoff.edu.repository.jdbc.mapper.TgChatMapper;
-
-import java.net.URI;
-import java.util.List;
 
 @AllArgsConstructor
 @Repository
@@ -29,7 +28,7 @@ public class ChatLinkRepository {
     @Transactional
     public void unregisterChat(Long tgChatId) {
         List<Link> trackedLinks = getAllLinks(tgChatId);
-        for (Link link: trackedLinks) {
+        for (Link link : trackedLinks) {
             untrackLink(tgChatId, link.getLink());
         }
         tgChatRepository.remove(tgChatId);
@@ -41,8 +40,8 @@ public class ChatLinkRepository {
         if (tgChat == null) {
             throw new ResourceNotFoundException("Tg chat '" + tgChatId + "' was not found");
         }
-        return jdbcTemplate.query("select * from link where id in (select link_id from chat_link cl " +
-                "join chat c on cl.chat_id=c.id where c.id=?)", linkMapper, tgChat.getId());
+        return jdbcTemplate.query("select * from link where id in (select link_id from chat_link cl "
+            + "join chat c on cl.chat_id=c.id where c.id=?)", linkMapper, tgChat.getId());
     }
 
     @Transactional
@@ -55,8 +54,10 @@ public class ChatLinkRepository {
         if (tgChat == null) {
             throw new ResourceNotFoundException("Tg chat '" + tgChatId + "' was not found");
         }
-        Integer rowCount = jdbcTemplate.queryForObject("select count(*) from chat_link where chat_id=? and link_id=?", Integer.class,
-                tgChat.getId(), link.getId());
+        Integer rowCount =
+            jdbcTemplate.queryForObject("select count(*) from chat_link where chat_id=? and link_id=?", Integer.class,
+                tgChat.getId(), link.getId()
+            );
         if (rowCount != null && !rowCount.equals(0)) {
             throw new RuntimeException("Link '" + url + "' is already tracking by tg chat '" + tgChatId + "'");
         }
@@ -74,7 +75,8 @@ public class ChatLinkRepository {
         if (tgChat == null) {
             throw new ResourceNotFoundException("Tg chat '" + tgChatId + "' was not found");
         }
-        int rowCount = jdbcTemplate.update("delete from chat_link where chat_id=? and link_id=?", tgChat.getId(), link.getId());
+        int rowCount =
+            jdbcTemplate.update("delete from chat_link where chat_id=? and link_id=?", tgChat.getId(), link.getId());
         if (rowCount == 0) {
             throw new RuntimeException("Link '" + url + "' is not tracking by tg chat '" + tgChatId + "'");
         }
@@ -85,7 +87,11 @@ public class ChatLinkRepository {
     }
 
     public List<TgChat> getChatsForLink(Link link) {
-        return jdbcTemplate.query("select * from chat where id in (select chat_id from chat_link where link_id=?)", tgChatMapper, link.getId());
+        return jdbcTemplate.query(
+            "select * from chat where id in (select chat_id from chat_link where link_id=?)",
+            tgChatMapper,
+            link.getId()
+        );
     }
 
     private Integer getLinkCount(Long linkId) {

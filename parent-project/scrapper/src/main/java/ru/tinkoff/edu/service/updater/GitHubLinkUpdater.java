@@ -1,5 +1,6 @@
 package ru.tinkoff.edu.service.updater;
 
+import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.record.GitHubRecord;
@@ -8,8 +9,6 @@ import ru.tinkoff.edu.response.RepositoryResponse;
 import ru.tinkoff.edu.service.LinkManipulator;
 import ru.tinkoff.edu.service.LinkService;
 import ru.tinkoff.edu.service.sender.LinkUpdateSender;
-
-import java.time.OffsetDateTime;
 
 @AllArgsConstructor
 @Service
@@ -23,9 +22,9 @@ public class GitHubLinkUpdater implements LinkUpdater {
         RepositoryResponse response = linkManipulator.getResponse((GitHubRecord) linkManipulator.getRecord(link));
         link.setLastUpdate(OffsetDateTime.now());
         if (!response.open_issues_count().equals(link.getOpenIssuesCount())) {
-            String desc = (response.open_issues_count() > link.getOpenIssuesCount()) ?
-                    "In repository '" + response.full_name() + "' new open issues have been added!" :
-                    "In repository '" + response.full_name() + "' issues have been closed!";
+            String desc = (response.open_issues_count() > link.getOpenIssuesCount())
+                ? "In repository '" + response.full_name() + "' new open issues have been added!"
+                : "In repository '" + response.full_name() + "' issues have been closed!";
             link.setLastActivity(response.updated_at());
             link.setOpenIssuesCount(response.open_issues_count());
             linkUpdateSender.sendUpdate(link, desc);

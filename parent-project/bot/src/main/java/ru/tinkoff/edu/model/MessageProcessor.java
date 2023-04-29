@@ -2,13 +2,12 @@ package ru.tinkoff.edu.model;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import ru.tinkoff.edu.command.Command;
-import ru.tinkoff.edu.command.TrackCommand;
-import ru.tinkoff.edu.command.UntrackCommand;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import ru.tinkoff.edu.command.Command;
+import ru.tinkoff.edu.command.TrackCommand;
+import ru.tinkoff.edu.command.UntrackCommand;
 
 public class MessageProcessor {
     private final List<? extends Command> commands;
@@ -28,8 +27,7 @@ public class MessageProcessor {
                     .findAny().orElse(null);
             if (processor == null) {
                 return invalidCommandMessage(update);
-            }
-            else {
+            } else {
                 if (processor instanceof TrackCommand) {
                     trackRequest.add(update.message().chat().id());
                 }

@@ -1,5 +1,11 @@
 package ru.tinkoff.edu.service.jpa;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.configuration.ApplicationConfig;
@@ -18,13 +24,6 @@ import ru.tinkoff.edu.response.ListLinksResponse;
 import ru.tinkoff.edu.service.LinkManipulator;
 import ru.tinkoff.edu.service.LinkService;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.util.List;
-
 @AllArgsConstructor
 public class JpaLinkService implements LinkService {
     private final TgChatEntityRepository tgChatEntityRepository;
@@ -38,9 +37,9 @@ public class JpaLinkService implements LinkService {
     @Override
     public LinkResponse add(Long tgChatId, URI url) {
         TgChatEntity tgChatEntity = tgChatEntityRepository.findByTgChatId(tgChatId)
-                .orElseThrow(() -> new ResourceNotFoundException("Tg chat '" + tgChatId + "' was not found"));
+            .orElseThrow(() -> new ResourceNotFoundException("Tg chat '" + tgChatId + "' was not found"));
         LinkEntity linkEntity = linkEntityRepository.findByLink(url.toString()).orElseGet(
-                () -> linkEntityRepository.save(linkManipulator.createLinkEntity(url)));
+            () -> linkEntityRepository.save(linkManipulator.createLinkEntity(url)));
         if (chatLinkEntityRepository.findByTgChatAndLink(tgChatEntity, linkEntity).isPresent()) {
             throw new RuntimeException("Link '" + url + "' is already tracking by tg chat '" + tgChatId + "'");
         }
@@ -59,9 +58,9 @@ public class JpaLinkService implements LinkService {
     @Override
     public LinkResponse remove(Long tgChatId, URI url) {
         TgChatEntity tgChatEntity = tgChatEntityRepository.findByTgChatId(tgChatId)
-                .orElseThrow(() -> new ResourceNotFoundException("Tg chat '" + tgChatId + "' was not found"));
+            .orElseThrow(() -> new ResourceNotFoundException("Tg chat '" + tgChatId + "' was not found"));
         LinkEntity linkEntity = linkEntityRepository.findByLink(url.toString())
-                .orElseThrow(() -> new ResourceNotFoundException("Link '" + url + "' was not found"));
+            .orElseThrow(() -> new ResourceNotFoundException("Link '" + url + "' was not found"));
         chatLinkEntityRepository.deleteByTgChatAndLink(tgChatEntity, linkEntity);
         if (chatLinkEntityRepository.getTgChatsByLinkId(linkEntity.getId()).size() == 0) {
             linkEntityRepository.deleteById(linkEntity.getId());
@@ -86,7 +85,10 @@ public class JpaLinkService implements LinkService {
     @Override
     public List<Link> findLinksForUpdate() {
         return linkEntityRepository.findAll().stream().filter((LinkEntity le) ->
-            le.getLastUpdate().isBefore(OffsetDateTime.of(LocalDateTime.now().minusMinutes(config.getUpdateInterval()), ZoneOffset.UTC))
+            le.getLastUpdate().isBefore(OffsetDateTime.of(
+                LocalDateTime.now().minusMinutes(config.getUpdateInterval()),
+                ZoneOffset.UTC
+            ))
         ).map((LinkEntity le) -> {
             try {
                 return converter.linkEntityToLink(le);
@@ -99,14 +101,15 @@ public class JpaLinkService implements LinkService {
     @Transactional
     @Override
     public List<TgChat> getChatsForLink(Link link) {
-        return chatLinkEntityRepository.getTgChatsByLinkId(link.getId()).stream().map(converter::tgChatEntityToTgChat).toList();
+        return chatLinkEntityRepository.getTgChatsByLinkId(link.getId()).stream().map(converter::tgChatEntityToTgChat)
+            .toList();
     }
 
     @Transactional
     @Override
     public void updateLink(Link link) {
         LinkEntity linkEntity = linkEntityRepository.findById(link.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Link '" + link.getLink() + "' was not found"));
+            .orElseThrow(() -> new ResourceNotFoundException("Link '" + link.getLink() + "' was not found"));
         linkEntity.setAnswerCount(link.getAnswerCount());
         linkEntity.setLastUpdate(link.getLastUpdate());
         linkEntity.setLastActivity(link.getLastActivity());

@@ -1,16 +1,16 @@
 package ru.tinkoff.edu.scheduler;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.record.GitHubRecord;
 import ru.tinkoff.edu.record.StackOverflowRecord;
 import ru.tinkoff.edu.repository.jdbc.dto.Link;
-import ru.tinkoff.edu.service.*;
+import ru.tinkoff.edu.service.LinkManipulator;
+import ru.tinkoff.edu.service.LinkService;
 import ru.tinkoff.edu.service.updater.GitHubLinkUpdater;
 import ru.tinkoff.edu.service.updater.StackOverflowLinkUpdater;
-
-import java.util.List;
 
 @Component
 @AllArgsConstructor
@@ -22,18 +22,14 @@ public class LinkUpdaterScheduler {
 
     @Scheduled(fixedDelayString = "#{@applicationConfig.scheduler.interval()}")
     public void update() {
-        System.out.println("Data update started");
-
         List<Link> links = linkService.findLinksForUpdate();
         for (Link link: links) {
-            Record record = linkManipulator.getRecord(link);
-            if (record instanceof GitHubRecord) {
+            Record apiRecord = linkManipulator.getRecord(link);
+            if (apiRecord instanceof GitHubRecord) {
                 gitHubLinkUpdater.update(link);
-            } else if (record instanceof StackOverflowRecord) {
+            } else if (apiRecord instanceof StackOverflowRecord) {
                 stackOverflowLinkUpdater.update(link);
             }
         }
-
-        System.out.println("Data update finished");
     }
 }

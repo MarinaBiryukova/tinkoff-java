@@ -1,5 +1,6 @@
 package ru.tinkoff.edu.service.jooq;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,8 +9,6 @@ import ru.tinkoff.edu.exception.ResourceNotFoundException;
 import ru.tinkoff.edu.repository.jdbc.dto.Link;
 import ru.tinkoff.edu.repository.jdbc.dto.TgChat;
 import ru.tinkoff.edu.service.TgChatService;
-
-import java.util.List;
 
 @AllArgsConstructor
 public class JooqTgChatService implements TgChatService {
@@ -33,14 +32,15 @@ public class JooqTgChatService implements TgChatService {
             throw new ResourceNotFoundException("Tg chat '" + tgChatId + "' was not found");
         }
         List<Link> trackedLinks = context.select(Tables.LINK.fields()).from(Tables.CHAT_LINK)
-                .join(Tables.CHAT).on(Tables.CHAT.ID.eq(Tables.CHAT_LINK.CHAT_ID))
-                .join(Tables.LINK).on(Tables.LINK.ID.eq(Tables.CHAT_LINK.LINK_ID))
-                .where(Tables.CHAT.ID.eq(tgChat.getId())).fetchInto(Link.class);
-        for (Link link: trackedLinks) {
+            .join(Tables.CHAT).on(Tables.CHAT.ID.eq(Tables.CHAT_LINK.CHAT_ID))
+            .join(Tables.LINK).on(Tables.LINK.ID.eq(Tables.CHAT_LINK.LINK_ID))
+            .where(Tables.CHAT.ID.eq(tgChat.getId())).fetchInto(Link.class);
+        for (Link link : trackedLinks) {
             context.deleteFrom(Tables.CHAT_LINK).where(Tables.CHAT_LINK.LINK_ID.eq(link.getId()))
-                    .and(Tables.CHAT_LINK.CHAT_ID.eq(tgChat.getId())).execute();
+                .and(Tables.CHAT_LINK.CHAT_ID.eq(tgChat.getId())).execute();
             int count = context.selectCount().from(Tables.CHAT_LINK)
-                    .where(Tables.CHAT_LINK.LINK_ID.eq(link.getId()).and(Tables.CHAT_LINK.CHAT_ID.notEqual(tgChat.getId()))).fetchOne(0, int.class);
+                .where(Tables.CHAT_LINK.LINK_ID.eq(link.getId()).and(Tables.CHAT_LINK.CHAT_ID.notEqual(tgChat.getId())))
+                .fetchOne(0, int.class);
             if (count == 0) {
                 context.deleteFrom(Tables.LINK).where(Tables.LINK.ID.eq(link.getId())).execute();
             }
@@ -50,7 +50,7 @@ public class JooqTgChatService implements TgChatService {
 
     private TgChat getTgChat(Long tgChatId) {
         List<TgChat> chats = context.select(Tables.CHAT.fields()).from(Tables.CHAT)
-                .where(Tables.CHAT.TG_CHAT_ID.eq(tgChatId)).fetchInto(TgChat.class);
+            .where(Tables.CHAT.TG_CHAT_ID.eq(tgChatId)).fetchInto(TgChat.class);
         if (chats.size() == 0) {
             return null;
         }

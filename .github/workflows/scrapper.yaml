@@ -1,0 +1,35 @@
+name: Scrapper CI
+
+on:
+  push:
+    path:
+      - 'common/**'
+      - 'link-parser/**'
+      - 'scrapper/**'
+      - 'scrapper.Dockerfile'
+      - 'checkstyle.xml'
+      - 'parent-project/pom.xml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Maven project
+        run: mvn package -pl scrapper -am
+
+      - name: Log in to Docker Hub
+        run: docker login -u ${{ DOCKER_USERNAME }} -p ${{ DOCKER_PASSWORD }}
+
+      - name: Build Docker image
+        run: docker build --file scrapper.Dockerfile -t scrapper:latest .
+
+      - name: Push Docker image to Docker Hub
+        run: docker push scrapper:latest
+
+  checkstyle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run check style
+        run: |
+          mvn -pl scrapper -am checkstyle:check

@@ -1,11 +1,10 @@
 package ru.tinkoff.edu.request;
 
+import java.net.URI;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.net.URI;
 
 @Getter
 @Setter
