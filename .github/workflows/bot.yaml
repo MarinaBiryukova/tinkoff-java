@@ -15,16 +15,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build Maven project
-        run: mvn package -pl parent-project/bot -am
+        run: cd parent-project | mvn package -pl bot -am
 
       - name: Log in to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build --file parent-project/bot.Dockerfile -t bot:latest .
+        run: cd parent-project | docker build --file bot.Dockerfile -t bot:latest .
 
       - name: Push Docker image to Docker Hub
-        run: docker push bot:latest
+        run: cd parent-project | docker push bot:latest
 
   checkstyle:
     runs-on: ubuntu-latest
