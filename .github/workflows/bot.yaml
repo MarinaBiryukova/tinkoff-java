@@ -34,10 +34,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Docker image
-        run: cd parent-project && docker build --file bot.Dockerfile -t ghcr.io/${{ vars.IMAGE_NAME }}/bot:latest .
+        run: cd parent-project && docker build --file bot.Dockerfile -t ghcr.io/${{ github.repository }}/bot:latest .
 
       - name: Push Docker image to GitHub Container Registry
-        run: docker push ghcr.io/${{ vars.IMAGE_NAME }}/bot:latest
+        run: docker push ghcr.io/${{ github.repository }}/bot:latest
 
   checkstyle:
     runs-on: ubuntu-latest
