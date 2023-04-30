@@ -29,7 +29,7 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build --file scrapper.Dockerfile -t scrapper:latest .
+        run: cd parent-project && docker build --file scrapper.Dockerfile -t scrapper:latest .
 
       - name: Push Docker image to Docker Hub
         run: docker push scrapper:latest
