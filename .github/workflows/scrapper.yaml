@@ -15,6 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Set up JDK 19
+        uses: actions/setup-java@v3
+        with:
+          java-version: '19'
+          distribution: 'temurin'
+          cache: maven
+
       - name: Build Maven project
         run: cd parent-project | mvn package -pl scrapper -am
 
@@ -22,14 +29,21 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: cd parent-project | docker build --file scrapper.Dockerfile -t scrapper:latest .
+        run: docker build --file scrapper.Dockerfile -t scrapper:latest .
 
       - name: Push Docker image to Docker Hub
-        run: cd parent-project | docker push scrapper:latest
+        run: docker push scrapper:latest
 
   checkstyle:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 19
+        uses: actions/setup-java@v3
+        with:
+          java-version: '19'
+          distribution: 'temurin'
+          cache: maven
+
       - name: Run check style
-        run: |
-          mvn -pl scrapper -am checkstyle:check
+        run: cd parent-project | mvn -pl scrapper -am checkstyle:check
