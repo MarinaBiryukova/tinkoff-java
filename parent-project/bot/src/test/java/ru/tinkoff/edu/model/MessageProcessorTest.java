@@ -21,6 +21,7 @@ import ru.tinkoff.edu.response.ListLinksResponse;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
+// Comment
 @ExtendWith(MockitoExtension.class)
 public class MessageProcessorTest {
     @Mock
