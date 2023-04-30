@@ -33,11 +33,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Lowercase repo name
+        uses: actions/github-script@v6
+        id: lowercase_repo
+        with:
+          result-encoding: string
+          script: return 'ghcr.io/${{ github.repository }}'.toLowerCase()
+
       - name: Build Docker image
-        run: cd parent-project && docker build --file bot.Dockerfile -t ghcr.io/${{ github.repository }}/bot:latest .
+        run: cd parent-project && docker build --file bot.Dockerfile -t ${{ steps.lowercase_repo.outputs.result }}/bot:latest .
 
       - name: Push Docker image to GitHub Container Registry
-        run: docker push ghcr.io/${{ github.repository }}/bot:latest
+        run: docker push ${{ steps.lowercase_repo.outputs.result }}/bot:latest
 
   checkstyle:
     runs-on: ubuntu-latest
