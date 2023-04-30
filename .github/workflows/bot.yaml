@@ -2,12 +2,12 @@ name: Bot CI
 
 on:
   push:
-    path:
-      - "**/parent-project/bot/**"
-      - "**/parent-project/common/**"
-      - "**/parent-project/bot.Dockerfile"
-      - "**/parent-project/checkstyle.xml"
-      - "**/parent-project/pom.xml"
+    paths:
+      - "parent-project/bot/**"
+      - "parent-project/common/**"
+      - "parent-project/bot.Dockerfile"
+      - "parent-project/checkstyle.xml"
+      - "parent-project/pom.xml"
 
 jobs:
   build:

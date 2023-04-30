@@ -2,13 +2,13 @@ name: Scrapper CI
 
 on:
   push:
-    path:
-      - "**/parent-project/common/**"
-      - "**/parent-project/link-parser/**"
-      - "**/parent-project/scrapper/**"
-      - "**/parent-project/scrapper.Dockerfile"
-      - "**/parent-project/checkstyle.xml"
-      - "**/parent-project/pom.xml"
+    paths:
+      - "parent-project/common/**"
+      - "parent-project/link-parser/**"
+      - "parent-project/scrapper/**"
+      - "parent-project/scrapper.Dockerfile"
+      - "parent-project/checkstyle.xml"
+      - "parent-project/pom.xml"
 
 jobs:
   build:
