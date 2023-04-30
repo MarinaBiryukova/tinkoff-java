@@ -8,6 +8,7 @@ on:
       - "parent-project/bot.Dockerfile"
       - "parent-project/checkstyle.xml"
       - "parent-project/pom.xml"
+      - ".github/workflows/bot.yaml"
 
 jobs:
   build:

@@ -9,6 +9,7 @@ on:
       - "parent-project/scrapper.Dockerfile"
       - "parent-project/checkstyle.xml"
       - "parent-project/pom.xml"
+      - ".github/workflows/scrapper.yaml"
 
 jobs:
   build:
