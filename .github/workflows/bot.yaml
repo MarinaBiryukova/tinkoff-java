@@ -22,7 +22,7 @@ jobs:
           cache: maven
 
       - name: Build Maven project
-        run: cd parent-project | mvn package -pl bot -am
+        run: cd parent-project && ls && mvn package -pl bot -am
 
       - name: Log in to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
@@ -45,4 +45,4 @@ jobs:
           cache: maven
 
       - name: Run check style
-        run: cd parent-project | mvn -pl bot -am checkstyle:check
+        run: cd parent-project && mvn -pl bot -am checkstyle:check
