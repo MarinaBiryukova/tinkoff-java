@@ -1,5 +1,6 @@
 package ru.tinkoff.edu.service.jpa;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.exception.ResourceNotFoundException;
@@ -9,8 +10,6 @@ import ru.tinkoff.edu.repository.jpa.TgChatEntityRepository;
 import ru.tinkoff.edu.repository.jpa.entity.LinkEntity;
 import ru.tinkoff.edu.repository.jpa.entity.TgChatEntity;
 import ru.tinkoff.edu.service.TgChatService;
-
-import java.util.List;
 
 @AllArgsConstructor
 public class JpaTgChatService implements TgChatService {

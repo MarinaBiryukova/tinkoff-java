@@ -1,5 +1,7 @@
 package ru.tinkoff.edu.service.jdbc;
 
+import java.net.URI;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import ru.tinkoff.edu.converter.Converter;
 import ru.tinkoff.edu.repository.jdbc.ChatLinkRepository;
@@ -10,9 +12,6 @@ import ru.tinkoff.edu.response.LinkResponse;
 import ru.tinkoff.edu.response.ListLinksResponse;
 import ru.tinkoff.edu.service.LinkManipulator;
 import ru.tinkoff.edu.service.LinkService;
-
-import java.net.URI;
-import java.util.List;
 
 @AllArgsConstructor
 public class JdbcLinkService implements LinkService {

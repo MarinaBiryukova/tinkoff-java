@@ -5,7 +5,7 @@ import ru.tinkoff.edu.model.Bot;
 import ru.tinkoff.edu.request.LinkUpdate;
 
 @AllArgsConstructor
-public abstract class LinkUpdateReceiver {
+public abstract class AbstractLinkUpdateReceiver {
     private Bot bot;
 
     public abstract void receiveUpdate(LinkUpdate request);

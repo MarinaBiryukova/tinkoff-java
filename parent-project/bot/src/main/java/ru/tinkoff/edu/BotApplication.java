@@ -7,11 +7,9 @@ import ru.tinkoff.edu.configuration.ApplicationConfig;
 
 @SpringBootApplication
 @EnableConfigurationProperties(ApplicationConfig.class)
-public class BotApplication
-{
+public class BotApplication {
 
-    public static void main( String[] args )
-    {
+    public static void main(String[] args) {
         SpringApplication.run(BotApplication.class, args);
     }
 }

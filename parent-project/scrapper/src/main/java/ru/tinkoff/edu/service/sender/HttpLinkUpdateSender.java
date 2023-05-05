@@ -1,7 +1,6 @@
 package ru.tinkoff.edu.service.sender;
 
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.client.BotClient;
 import ru.tinkoff.edu.repository.jdbc.dto.Link;
 import ru.tinkoff.edu.repository.jdbc.dto.TgChat;
