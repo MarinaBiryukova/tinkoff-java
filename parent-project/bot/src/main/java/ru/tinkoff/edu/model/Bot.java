@@ -6,9 +6,9 @@ import com.pengrad.telegrambot.model.BotCommand;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SetMyCommands;
+import io.micrometer.core.instrument.MeterRegistry;
 import java.util.Arrays;
 import java.util.List;
-import io.micrometer.core.instrument.MeterRegistry;
 import ru.tinkoff.edu.command.Command;
 import ru.tinkoff.edu.metric.ProcessedMessagesMetric;
 

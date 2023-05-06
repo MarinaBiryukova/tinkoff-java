@@ -11,6 +11,7 @@ public class ProcessedMessagesMetric {
             .description("Number of processed messages from users")
             .register(registry);
     }
+
     public void incrementMetric() {
         counter.increment();
     }
