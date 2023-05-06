@@ -1,5 +1,6 @@
 package ru.tinkoff.edu.configuration;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.tinkoff.edu.client.ScrapperClient;
@@ -15,10 +16,12 @@ public class BotConfig {
     @Bean
     public Bot bot(
             ApplicationConfig config,
-            ScrapperClient client
+            ScrapperClient client,
+            MeterRegistry registry
     ) {
         return new Bot(
                 config.token(),
+                registry,
                 new StartCommand(client),
                 new ListCommand(client),
                 new TrackCommand(client),
