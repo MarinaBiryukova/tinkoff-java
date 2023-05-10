@@ -23,14 +23,14 @@ public class GitHubLinkUpdater implements LinkUpdater {
         link.setLastUpdate(OffsetDateTime.now());
         if (!response.open_issues_count().equals(link.getOpenIssuesCount())) {
             String desc = (response.open_issues_count() > link.getOpenIssuesCount())
-                ? "In repository '" + response.full_name() + "' new open issues have been added!"
-                : "In repository '" + response.full_name() + "' issues have been closed!";
+                ? "В репозитории '" + response.full_name() + "' были открыты новые issues!"
+                : "В репозитории '" + response.full_name() + "' были закрыты issues!";
             link.setLastActivity(response.updated_at());
             link.setOpenIssuesCount(response.open_issues_count());
             linkUpdateSender.sendUpdate(link, desc);
         } else if (response.updated_at().isAfter(link.getLastActivity())) {
             link.setLastActivity(response.updated_at());
-            linkUpdateSender.sendUpdate(link, "Repository '" + response.full_name() + "' has updates!");
+            linkUpdateSender.sendUpdate(link, "В репозитории '" + response.full_name() + "' есть обновления!");
         }
         linkService.updateLink(link);
     }

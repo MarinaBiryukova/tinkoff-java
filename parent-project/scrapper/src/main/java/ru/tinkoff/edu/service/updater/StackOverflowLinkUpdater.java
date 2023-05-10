@@ -27,11 +27,11 @@ public class StackOverflowLinkUpdater implements LinkUpdater {
             link.setAnswerCount(response.answer_count());
             linkUpdateSender.sendUpdate(
                 link,
-                "In question '" + response.question_id() + "' new answers have been added!"
+                "В вопросе '" + response.question_id() + "' были добавлены новые ответы!"
             );
         } else if (response.last_activity_date().isAfter(link.getLastActivity())) {
             link.setLastActivity(response.last_activity_date());
-            linkUpdateSender.sendUpdate(link, "Question '" + response.question_id() + "' has updates!");
+            linkUpdateSender.sendUpdate(link, "В вопросе '" + response.question_id() + "' есть обновления!");
         }
         linkService.updateLink(link);
     }
